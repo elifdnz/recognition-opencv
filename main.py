@@ -1,7 +1,7 @@
 import cv2   
 #img = cv2.imread("face.png")
-
-vid = cv2.VideoCapture("faces.mp4")
+#vid = cv2.VideoCapture("faces.mp4")
+vid = cv2.VideoCapture(0)
 cascade = cv2.CascadeClassifier("frontalface.xml")
 
 while 1:
