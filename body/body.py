@@ -1,6 +1,6 @@
 import cv2
 
-img = cv2.imread("body.png")
+img = cv2.imread("body.jpg")
 
 body_cascade = cv2.CascadeClassifier("fullbody.xml")
 
