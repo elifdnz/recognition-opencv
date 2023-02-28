@@ -1,15 +1,20 @@
 import cv2
 
-img = cv2.imread("car.jpg")
+#img = cv2.imread("car.jpg")
+vid = cv2.VideoCapture("car.mp4")
 car_cascade = cv2.CascadeClassifier("car.xml")
 
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+while 1:
+    ret, frame = vid.read()
+    
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    car = car_cascade.detectMultiScale(gray,1.2,3)
 
-car = car_cascade.detectMultiScale(gray,1.1,1)
+    for (x,y,w,h) in car:
+        cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255),3)
+    cv2.imshow("video",frame)
 
-for (x,y,w,h) in car:
-    cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),3)
-
-cv2.imshow("car",img)
-cv2.waitKey(0)
+    if cv2.waitKey(5) & 0xFF == ord('q'):
+        break
+vid.release()
 cv2.destroyAllWindows()
