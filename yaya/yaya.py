@@ -1,18 +1,27 @@
 import cv2
 import imutils as im
 
-resim = cv2.imread("yaya.jpeg")
+# resim = cv2.imread("yaya.jpeg")
 
-resim = im.resize(resim,300)
+# resim = im.resize(resim,300)
 
-hogd = cv2.HOGDescriptor()
-hogd.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
+vid = cv2.VideoCapture("yayalar.mp4")
 
-cor , _ = hogd.detectMultiScale(resim, winStride = (4,4),padding = (8,8),scale = 1.02)
+while True:
+    ret, frame = vid.read()
+    if ret == False:
+        break
+    frame = im.resize(frame,500)
+    hogd = cv2.HOGDescriptor()
+    hogd.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
+    cor , _ = hogd.detectMultiScale(frame, winStride = (4,4),padding = (2,2),scale = 1.5)
+    for (x,y,w,h) in cor:
+        cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255),4)
 
-for (x,y,w,h) in cor:
-    cv2.rectangle(resim,(x,y),(x+w,y+h),(0,0,255),5)
+    cv2.imshow("İmage",frame)
+    if cv2.waitKey(5) & 0xFF ==ord('q'):
+        break
 
-cv2.imshow("İmage",resim)
-cv2.waitKey(0)
+
+vid.release()
 cv2.destroyAllWindows()
