@@ -6,7 +6,7 @@ import imutils as im
 # resim = im.resize(resim,300)
 
 vid = cv2.VideoCapture("yayalar.mp4")
-
+text = "Pedestrian Detection"
 while True:
     ret, frame = vid.read()
     if ret == False:
@@ -17,7 +17,7 @@ while True:
     cor , _ = hogd.detectMultiScale(frame, winStride = (4,4),padding = (2,2),scale = 1.5)
     for (x,y,w,h) in cor:
         cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255),4)
-
+    cv2.putText(frame,text,(50,250),7,1.5,(255,50,0))
     cv2.imshow("İmage",frame)
     if cv2.waitKey(5) & 0xFF ==ord('q'):
         break
